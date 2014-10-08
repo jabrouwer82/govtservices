@@ -6,7 +6,8 @@ import config
 
 
 # Given a question, query Watson for the answer
-def ask_watson(question):
+# Returns the entire json response
+def ask(question):
     URL = "https://watson-wdc01.ihost.com/instance/505/deepqa/v1/question"
 
     payload = {
@@ -32,4 +33,4 @@ def ask_watson(question):
         return None
 
 if __name__ == "__main__":
-    print ask_watson("Where can I find food for my pet?")
+    print ask("Where can I find food for my pet?")
