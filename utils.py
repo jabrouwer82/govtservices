@@ -15,7 +15,7 @@ class Handler(webapp2.RequestHandler):
     """General request handler including helper methods and other general
     handling"""
 
-    def render_template(self, template_name, contents):
+    def render_template(self, template_name, **contents):
         """Helper method to render the template with the appropriate contents.
 
         :type template_name: string
