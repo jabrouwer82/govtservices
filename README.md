@@ -3,9 +3,12 @@ Watson 211 WebApp
 
 Web app for the Watson 211 team on the Google App Engine
 
-## Authentication
+The app is deployed at [government-services.appspot.com](government-services.appspot.com)
 
-To authenticate with Watson, create a file in the root directory named `config.py` with the contents:
+
+## Local Authentication
+
+To authenticate with Watson, edit `config.py` with and add your credentials:
 
     auth = {
         "user": "<your username>",
