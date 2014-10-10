@@ -3,7 +3,7 @@ Watson 211 WebApp
 
 Web app for the Watson 211 team on the Google App Engine
 
-The app is deployed at [government-services.appspot.com](government-services.appspot.com)
+The app is deployed at [government-services.appspot.com](http://government-services.appspot.com)
 
 
 ## Local Authentication
