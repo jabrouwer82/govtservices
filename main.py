@@ -1,5 +1,5 @@
 import webapp2
-
+import watson
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -7,5 +7,6 @@ class MainPage(webapp2.RequestHandler):
         self.response.write('hello, world')
 
 application = webapp2.WSGIApplication([
-    ('/', MainPage)
+    ('/', MainPage),
+    ('/ask', watson.AskWatson)
 ], debug=True)
