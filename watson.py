@@ -1,4 +1,3 @@
-import auth_config
 import base64
 import config
 import httplib
@@ -13,17 +12,22 @@ class AskWatson(webapp2.RequestHandler):
     # Given a question, query Watson for the answer
     # Returns the entire json response
     def get(self):
-        # Verify the instance has set a username and password.
-        if (auth_config.auth['username'] == config.DEFAULT_USERNAME
-              or auth_config.auth['password'] == config.DEFAULT_PASSWORD):
-            raise ConfigurationError('Please edit auth_config.py to include '
-                                     'your username and password')
+        conf = config.CONFIG_DB
+        
+        # Verify the instance is configured.
+        conf_defaults = config.CONFIG_DEFAULTS
+        if (conf.username == conf_defaults['DEFAULT_USERNAME']
+              or conf.password == conf_defaults['DEFAULT_PASSWORD']
+              or conf.watson_url == conf_defaults['DEFAULT_WATSON_URL']):
+            raise ConfigurationError('Open the admin console and edit the '
+                                     'config master entry to include your '
+                                     'username and password')
 
         # Standard HTTP basic authorization, base 64 encode username:password
         auth = base64.b64encode(
               '{username}:{password}'.format(
-                    username=auth_config.auth['username'],
-                    password=auth_config.auth['password']))
+                    username=conf.username,
+                    password=conf.password))
 
          # Load question from request, with a given default.
         question = self.request.get('q', "Where can I find food for my pet?")
@@ -41,7 +45,7 @@ class AskWatson(webapp2.RequestHandler):
             'X-SyncTimeout': 30
         }
       
-        r = urlfetch.fetch(url=config.WATSON_URL,
+        r = urlfetch.fetch(url=conf.watson_url,
                            payload=json.dumps(payload),
                            headers=headers)
 
@@ -49,6 +53,10 @@ class AskWatson(webapp2.RequestHandler):
             self.response.write(r.content)
         else:
             raise WatsonError('Received a status code {code}: {status} when '
-                              'accessing Watson'.format(
+                              'accessing Watson at {url} with credentials: '
+                              '{user}, {password}'.format(
                                     code=r.status_code,
-                                    status=httplib.responses[r.status_code]))
+                                    status=httplib.responses[r.status_code],
+                                    url=conf.watson_url,
+                                    user=conf.username,
+                                    password=conf.password))

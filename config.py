@@ -1,4 +1,8 @@
 # Application-wide configuration constants
-WATSON_URL = 'https://watson-wdc01.ihost.com/instance/505/deepqa/v1/question'
-DEFAULT_USERNAME = 'DEFAULT USERNAME'
-DEFAULT_PASSWORD = 'DEFAULT PASSWORD'
+import models.config
+
+# Default configuration settings.
+CONFIG_DEFAULTS = models.config.Config.get_defaults()
+
+# Actual configuration settings.
+CONFIG_DB = models.config.Config.get_master_db()
