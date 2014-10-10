@@ -20,3 +20,5 @@ To authenticate with Watson, edit `auth_config.py` with and add your credentials
         "user": "<your username>",
         "pass": "<your password>"
     }
+
+Be sure to check the "Sign in as Administrator" button to have site access. Signing out of a test account can be a pain in the ass, a proper signout page will be added later to address this. For now it is recomended that you view your local server from private/incognito mode to avoid these issues.
