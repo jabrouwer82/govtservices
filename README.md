@@ -10,7 +10,7 @@ The [/ask](http://government-services.appspot.com/ask) directory can be used to 
 For example:
 http://government-services.appspot.com/ask?q=How much wood would a woodchuck chuck?
 
-or any HTML compatable version of the above, will issue a POST request to Watson with that question from the uta\_student13 role account if in the deployed version, or form your personal account if locally run.
+or any HTML compatable version of the above, will issue a POST request to Watson with that question from the uta\_student13 role account if in the deployed version, or from your personal account if locally run.
 
 ## Configuration
 
@@ -28,4 +28,4 @@ It is recommended that before you deploy the application, you increment the app 
 
 Deploying shouldn't take too long, however it should be noted that on my ocal machine and home internet it take between 10 and 20 minutes, so be patient with it.
 
-After the deploy is successful, be sure to open the [admin console](https://appengine.google.com/dashboard?&app_id=s~government-services) and change the default version form the old to the new in order to make the changes live.
+After the deploy is successful, be sure to open the [admin console](https://appengine.google.com/dashboard?&app_id=s~government-services) and change the default version from the old to the new in order to make the changes live.
