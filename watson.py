@@ -53,6 +53,7 @@ class AskWatson(webapp2.RequestHandler):
                            headers=headers)
 
         if r.status_code == httplib.OK:
+            self.response.headers["Content-Type"] = "application/json"
             self.response.write(r.content)
         else:
             raise WatsonError('Received a status code {code}: {status} when '
