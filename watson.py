@@ -44,9 +44,12 @@ class AskWatson(webapp2.RequestHandler):
             'Content-Type': 'application/json',
             'X-SyncTimeout': 30
         }
-      
+
+        # 60 seconds is the maximum time allowed on urlfetch for HTTP requests.
+        urlfetch.set_default_fetch_deadline(60) 
         r = urlfetch.fetch(url=conf.watson_url,
                            payload=json.dumps(payload),
+                           method=urlfetch.POST,
                            headers=headers)
 
         if r.status_code == httplib.OK:
