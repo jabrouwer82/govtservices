@@ -1,6 +1,7 @@
 import webapp2
 import watson
 
+
 class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
