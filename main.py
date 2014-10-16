@@ -1,11 +1,41 @@
+import os
+import jinja2
 import webapp2
 import watson
 
 
-class MainPage(webapp2.RequestHandler):
+jinja_environment = jinja2.Environment(
+    autoescape=True,
+    loader=jinja2.FileSystemLoader(
+        os.path.join(os.path.dirname(__file__), 'templates')
+    )
+)
+
+
+class GeneralRequestHandler(webapp2.RequestHandler):
+    """General request handler including helper methods and other general
+    handling"""
+
+    def render_template(self, template_name, contents):
+        """Helper method to render the template with the appropriate contents.
+
+        :type template_name: string
+        :param template_name: filepath of template in templates directory
+        :type contents: dict
+        :param contents: key/values to populate the template
+
+        :rtype: None
+        """
+        # TODO(matthewe|2014-10-16): Add 404 functionality if template not found
+        template = jinja_environment.get_template(template_name)
+        self.response.out.write(template.render(contents))
+
+
+class MainPage(GeneralRequestHandler):
+
     def get(self):
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.write('hello, world')
+        self.render_template('index.html', {})
+
 
 application = webapp2.WSGIApplication([
     ('/', MainPage),
