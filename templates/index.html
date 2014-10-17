@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="211ServicesApp">
     <head>
         <title>211 Services</title>
 
@@ -21,7 +21,7 @@
         <link href="/static/css/main.css" rel="stylesheet">
     </head>
 
-    <body ng-app="211ServicesApp">
+    <body>
         <!-- Navbar -->
         <nav class="navbar navbar-inverse" role="navigation">
             <div class="container">
@@ -50,22 +50,20 @@
           </div><!-- /.container-fluid -->
         </nav>
 
-        <!-- Side Menu -->
-        <div class="side-menu">
-            <ul class="side-menu-list">
-                <a href="#analytics"><li class="side-menu-list-item selected">
-                    <i class="fa fa-bar-chart fa-lg"></i> Analytics
-                </li></a>
-                <a href="#database"><li class="side-menu-list-item">
-                    <i class="fa fa-search fa-lg"></i> Database
-                </li></a>
-                <a href="#manage-users"><li class="side-menu-list-item">
-                    <i class="fa fa-user fa-lg"></i> Manage Users
-                </li></a>
-            </ul>
+        <div ng-controller="TabsController">
+            <!-- Side Menu -->
+            <div class="side-menu">
+                <ul class="side-menu-list">
+                    <li ng-repeat="tab in tabs"
+                        class="side-menu-list-item"
+                        ng-class="{active:isActiveTab(tab.url)}"
+                        ng-click="onClickTab(tab)">
+                        <i class="fa {[{tab.icon}]} fa-lg"></i>
+                        {[{tab.title}]}
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <!-- Analytics Section -->
-        <div ng-controller="analyticsController"></div>
     </body>
 </html>

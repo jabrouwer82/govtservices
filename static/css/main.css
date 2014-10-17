@@ -61,7 +61,7 @@ ul.side-menu-list li.side-menu-list-item {
     color: white;
 
     /* Fade out for unselected */
-    opacity: .75;
+    opacity: .5;
 
     /* Time duration for hover transforms */
     transition: 0.25s ease-in-out;
@@ -72,11 +72,11 @@ ul.side-menu-list a {
     text-decoration: none;
 }
 
-ul.side-menu-list li.selected {
+ul.side-menu-list li.active {
     opacity: 1.0;
 }
 
-ul.side-menu-list li.side-menu-list-item:hover {
+ul.side-menu-list li.side-menu-list-item:hover, li.active {
     -webkit-transform: translate(.8em, 0);
     -moz-transform: translate(.8em, 0);
     -o-transform: translate(.8em, 0);
@@ -88,5 +88,3 @@ ul.side-menu-list li.side-menu-list-item i {
     width: 40px;
     text-align: center;
 }
-
-
