@@ -1,1 +1,92 @@
-/* Yay all of our styling. Coming soon. */
+/*************************
+
+    main.css TABLE OF CONTENTS
+    ==========================
+
+    1) General Styling
+    2) Navbar Styling
+    3) Side Menu Styling
+
+
+************************ */
+
+
+/* *********************** */
+/*  1) General Styling     */
+/* *********************** */
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* *********************** */
+/*  2) Navbar Styling      */
+/* *********************** */
+nav.navbar {
+    /* Navbar needs to be on top of everything else */
+    z-index: 1;
+}
+
+
+/* *********************** */
+/*  3) Side Menu Styling   */
+/* *********************** */
+div.side-menu {
+    position: fixed;
+    /* TODO(matthewe|2014-10-17): for now hard code the width, eventually
+        look into making side menu responsive / mobile. */
+    width: 200px;
+    background-color: #2B3E51;
+    top: 0;
+    left: 0;
+    height: 100vh;
+
+    /* Padding for the navigation bar */
+    padding-top: 100px;
+}
+
+ul.side-menu-list {
+    color: white;
+    list-style-type: none;
+    padding: 0px 15px;
+    margin: 0px;
+    font-size: 1.1em;
+}
+
+ul.side-menu-list li.side-menu-list-item {
+    padding: 15px 0px;
+    margin: 0px;
+    text-decoration: none !important;
+    color: white;
+
+    /* Fade out for unselected */
+    opacity: .75;
+
+    /* Time duration for hover transforms */
+    transition: 0.25s ease-in-out;
+}
+
+/* Remove the link styling for side menu items*/
+ul.side-menu-list a {
+    text-decoration: none;
+}
+
+ul.side-menu-list li.selected {
+    opacity: 1.0;
+}
+
+ul.side-menu-list li.side-menu-list-item:hover {
+    -webkit-transform: translate(.8em, 0);
+    -moz-transform: translate(.8em, 0);
+    -o-transform: translate(.8em, 0);
+    -ms-transform: translate(.8em, 0);
+    transform: translate(.8em, 0);
+}
+
+ul.side-menu-list li.side-menu-list-item i {
+    width: 40px;
+    text-align: center;
+}
+
+
