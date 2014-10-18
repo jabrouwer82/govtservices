@@ -6,6 +6,7 @@
     1) General Styling
     2) Navbar Styling
     3) Side Menu Styling
+    4) Content Section Styling
 
 
 ************************ */
@@ -87,4 +88,12 @@ ul.side-menu-list li.side-menu-list-item:hover, li.active {
 ul.side-menu-list li.side-menu-list-item i {
     width: 40px;
     text-align: center;
+}
+
+
+/* ***************************** */
+/*  4) Content Section Styling   */
+/* ***************************** */
+div.contents {
+    padding-left: 235px;
 }

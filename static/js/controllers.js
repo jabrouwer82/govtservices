@@ -15,26 +15,33 @@ app.controller('TabsController', function ($scope) {
         {
             title: 'Analytics',
             icon: 'fa-bar-chart',
-            url: 'analytics.html'
+            url: 'static/analytics.html'
         },
         {
             title: 'Database',
             icon: 'fa-search',
-            url: 'database.html'
+            url: 'static/database.html'
         },
         {
             title: 'Manage Users',
             icon: 'fa-user',
-            url: 'manage-users.html'
+            url: 'static/manage-users.html'
         }
     ];
 
     // Begin on the analytics tab
-    $scope.currentTab = 'analytics.html';
+    $scope.currentTab = 'static/analytics.html';
+    $('.contents').load($scope.currentTab);
+
 
     // When a tab is clicked switch to that tab
     $scope.onClickTab = function(tab) {
-        $scope.currentTab = tab.url;
+        if ($scope.currentTab !== tab.url) {
+            $scope.currentTab = tab.url;
+            // TODO(matthewe|2014): Fix this way of switching between things,
+            // pretty sure there is a more angular way to do this
+            $('.contents').load(tab.url).hide().fadeIn("slow");
+        }
     }
 
     // The active tab is the current tab
