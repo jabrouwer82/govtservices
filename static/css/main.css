@@ -1,5 +1,6 @@
 /*************************
 
+
     main.css TABLE OF CONTENTS
     ==========================
 
@@ -7,6 +8,10 @@
     2) Navbar Styling
     3) Side Menu Styling
     4) Content Section Styling
+    5) Analytics Styling
+    6) Database Styling
+    7) Manage Users Styling
+    8) Ask Watson Styling
 
 
 ************************ */
@@ -96,4 +101,23 @@ ul.side-menu-list li.side-menu-list-item i {
 /* ***************************** */
 div.contents {
     padding-left: 235px;
+}
+
+
+/* ***************************** */
+/*  8) Content Section Styling   */
+/* ***************************** */
+input.question-input {
+    width: 60%;
+    float: left;
+}
+
+div.question-btn {
+    margin: 0px 15px;
+}
+
+div.progress {
+    width: 60%;
+    height: 20px;
+    margin: 10px 0px;
 }
