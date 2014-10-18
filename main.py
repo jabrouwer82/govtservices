@@ -12,7 +12,7 @@ jinja_environment = jinja2.Environment(
 )
 
 
-class GeneralRequestHandler(webapp2.RequestHandler):
+class Handler(webapp2.RequestHandler):
     """General request handler including helper methods and other general
     handling"""
 
@@ -26,12 +26,17 @@ class GeneralRequestHandler(webapp2.RequestHandler):
 
         :rtype: None
         """
-        # TODO(matthewe|2014-10-16): Add 404 functionality if template not found
+        # TODO(matthewe|2014-10-16): Add 404 functionality if template
+        # not found
         template = jinja_environment.get_template(template_name)
         self.response.out.write(template.render(contents))
 
+    def render_json(self, json_txt):
+        self.response.headers["Content-Type"] = "application/json"
+        self.response.write(json_txt)
 
-class MainPage(GeneralRequestHandler):
+
+class MainPage(Handler):
 
     def get(self):
         self.render_template('index.html', {})
