@@ -7,9 +7,10 @@ import webapp2
 
 from google.appengine.api import urlfetch
 from watson_exceptions import ConfigurationError, WatsonError
+import utils
 
 
-class AskWatson(Handler):
+class AskWatson(utils.Handler):
     # Given a question, query Watson for the answer
     # Returns the entire json response
     def get(self):
