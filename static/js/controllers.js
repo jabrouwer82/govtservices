@@ -1,4 +1,4 @@
-var app = angular.module('211ServicesApp', []);
+var app = angular.module('211ServicesApp', ['ngRoute']);
 
 // Jinja2 & Angular use the same things to designate templing,
 // modify what is used.
@@ -7,45 +7,74 @@ app.config(function($interpolateProvider) {
   $interpolateProvider.endSymbol('}]}');
 });
 
+// Define the applications routing and controllers for each
+app.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/analytics', {
+        templateUrl: 'static/analytics.html',
+        controller: 'AnalyticsController'
+    }).when('/database', {
+        templateUrl: 'static/database.html',
+        controller: 'DatabaseController'
+    }).when('/manage-users', {
+        templateUrl: 'static/manage-users.html',
+        controller: 'ManageUsersController'
+    }).when('/ask-watson', {
+        templateUrl: 'static/ask-watson.html',
+        controller: 'AskWatsonController'
+    }).otherwise({
+        redirectTo: '/analytics'
+    })
+
+}]);
+
 // TabsController, controls navigation between different panes
-app.controller('TabsController', function ($scope) {
+app.controller('TabsController', function ($scope, $location) {
 
     // Define the tabs and sections the user can toggle between
     $scope.tabs = [
         {
-            title: 'Analytics',
-            icon: 'fa-bar-chart',
-            url: 'static/analytics.html'
+            title: "Analytics",
+            url: '#analytics',
+            activeUrl: '/analytics',
+            icon: 'fa-bar-chart'
         },
         {
-            title: 'Database',
-            icon: 'fa-search',
-            url: 'static/database.html'
+            title: "Database",
+            url: '#database',
+            activeUrl: '/database',
+            icon: 'fa-search'
         },
         {
-            title: 'Manage Users',
-            icon: 'fa-user',
-            url: 'static/manage-users.html'
+            title: "Manage Users",
+            url: '#manage-users',
+            activeUrl: '/manage-users',
+            icon: 'fa-user'
+        },
+        {
+            title: "Ask Watson",
+            url: '#ask-watson',
+            activeUrl: '/ask-watson',
+            icon: 'fa-globe'
         }
     ];
 
-    // Begin on the analytics tab
-    $scope.currentTab = 'static/analytics.html';
-    $('.contents').load($scope.currentTab);
-
-
-    // When a tab is clicked switch to that tab
-    $scope.onClickTab = function(tab) {
-        if ($scope.currentTab !== tab.url) {
-            $scope.currentTab = tab.url;
-            // TODO(matthewe|2014): Fix this way of switching between things,
-            // pretty sure there is a more angular way to do this
-            $('.contents').load(tab.url).hide().fadeIn("slow");
-        }
-    }
-
-    // The active tab is the current tab
-    $scope.isActiveTab = function(tabUrl) {
-        return tabUrl == $scope.currentTab;
+    $scope.isActive = function(route) {
+        return route === $location.path();
     }
 });
+
+app.controller('AnalyticsController', function ($scope) {
+    $scope.title = 'AnalyticsController';
+})
+
+app.controller('DatabaseController', function ($scope) {
+    $scope.title = 'DatabaseController';
+})
+
+app.controller('ManageUsersController', function ($scope) {
+    $scope.title = 'ManageUsersController';
+})
+
+app.controller('AskWatsonController', function ($scope) {
+    $scope.title = 'AskWatsonController';
+})

@@ -5,7 +5,9 @@
 
         <!-- AngularJS / jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.js"></script>
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
 
         <!-- Bootstrap -->
         <link href="/static/css/flatly_bootstrap.min.css" rel="stylesheet">
@@ -54,21 +56,21 @@
             <!-- Side Menu -->
             <div class="side-menu">
                 <ul class="side-menu-list">
-                    <li ng-repeat="tab in tabs"
-                        class="side-menu-list-item"
-                        ng-class="{active:isActiveTab(tab.url)}"
-                        ng-click="onClickTab(tab)">
-                        <i class="fa {[{tab.icon}]} fa-lg"></i>
-                        {[{tab.title}]}
-                    </li>
+                    <a ng-repeat="tab in tabs"
+                        href="{[{tab.url}]}"
+                        >
+                        <li class="side-menu-list-item"
+                            ng-class="{active:isActive(tab.activeUrl)}">
+                                <i class="fa {[{tab.icon}]} fa-lg"></i>
+                                {[{tab.title}]}
+                        </li>
+                    </a>
                 </ul>
             </div>
         </div>
 
         <!-- Where all of the actual things go -->
-        <div class="contents">
-            foo
-        </div>
+        <div class="contents" ng-view></div>
 
 
 
