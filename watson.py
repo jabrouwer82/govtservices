@@ -3,15 +3,15 @@ import config
 import httplib
 import json
 import logging
-import webapp2
+import utils
 
 from google.appengine.api import urlfetch
 from watson_exceptions import ConfigurationError, WatsonError
-import utils
 
 
 class AskWatson(utils.Handler):
-    # Given a question, query Watson for the answer
+    '''Given a question, query Watson for the answer.'''
+
     # Returns the entire json response
     def get(self):
         conf = config.CONFIG_DB

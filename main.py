@@ -1,6 +1,6 @@
-import webapp2
-import watson
 import utils
+import watson
+import webapp2
 
 
 class MainPage(utils.Handler):
