@@ -2,7 +2,7 @@
     <div class="title-bar container">
         <h1>Manage Users</h1>
         <input type="text" class="user-search form-control"
-            placeholder="John Doe" ng-model="q">
+            placeholder="John Doe" ng-model="q.name">
     </div>
 
     <div class="card-outer col-lg-3 col-md-4 col-sm-6 col-xs-12">
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div ng-repeat="sponsor in sponsors | containsPartialMatch:q"
+    <div ng-repeat="sponsor in sponsors | filter:q"
         class="card-outer col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <div class="card">
             <i class="user-settings-icon fa fa-gear fa-2x"></i>

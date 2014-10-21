@@ -74,26 +74,6 @@ app.controller('DatabaseController', function ($scope) {
 // TODO(matthewe|10-20-2014): Clean this up and the
 // ManageUserscontroller, separate this file into different
 // components
-app.filter('containsPartialMatch', function() {
-    return function(items, letters) {
-        var filtered = [];
-        if (letters) {
-            for (var i = 0; i < items.length; i++) {
-                var result = items[i].name;
-                var matched = result.match(
-                    new RegExp(letters, 'i')
-                );
-                if (matched) {
-                    filtered.push(items[i])
-                };
-            }
-            return filtered;
-        } else {
-            return items;
-        }
-    }
-});
-
 app.controller('ManageUsersController', function ($scope, $timeout) {
     // TODO(matthewe|2014-10-20): This should come from an API
     // call rather than being static. Endpoint needs to be set
