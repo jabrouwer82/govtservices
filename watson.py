@@ -3,14 +3,15 @@ import config
 import httplib
 import json
 import logging
-import webapp2
+import utils
 
 from google.appengine.api import urlfetch
 from watson_exceptions import ConfigurationError, WatsonError
 
 
-class AskWatson(webapp2.RequestHandler):
-    # Given a question, query Watson for the answer
+class AskWatson(utils.Handler):
+    '''Given a question, query Watson for the answer.'''
+
     # Returns the entire json response
     def get(self):
         conf = config.CONFIG_DB
@@ -18,8 +19,9 @@ class AskWatson(webapp2.RequestHandler):
         # Verify the instance is configured.
         conf_defaults = config.CONFIG_DEFAULTS
         if (conf.username == conf_defaults['DEFAULT_USERNAME']
-              or conf.password == conf_defaults['DEFAULT_PASSWORD']
-              or conf.watson_url == conf_defaults['DEFAULT_WATSON_URL']):
+                or conf.password == conf_defaults['DEFAULT_PASSWORD']
+                or conf.watson_url == conf_defaults['DEFAULT_WATSON_URL']):
+
             raise ConfigurationError('Open the admin console and edit the '
                                      'config master entry to include your '
                                      'username and password')
@@ -27,10 +29,10 @@ class AskWatson(webapp2.RequestHandler):
         # Standard HTTP basic authorization, base 64 encode username:password
         auth = 'Basic ' + base64.b64encode(
                '{username}:{password}'.format(
-                    username=conf.username,
-                    password=conf.password))
+                   username=conf.username,
+                   password=conf.password))
 
-         # Load question from request, with a given default.
+        # Load question from request, with a given default.
         question = self.request.get('q', 'Where can I find food for my pet?')
         logging.info("Asking Watson: '{q}'".format(q=question))
         payload = {
@@ -54,13 +56,12 @@ class AskWatson(webapp2.RequestHandler):
                            headers=headers)
 
         if r.status_code == httplib.OK:
-            self.response.headers["Content-Type"] = "application/json"
-            self.response.write(r.content)
+            self.render_json(r.content)
         else:
             raise WatsonError('Received a status code {code}: {status} when '
                               'accessing Watson at {url} with username: '
                               '{user}'.format(
-                                    code=r.status_code,
-                                    status=httplib.responses[r.status_code],
-                                    url=conf.watson_url,
-                                    user=conf.username))
+                                  code=r.status_code,
+                                  status=httplib.responses[r.status_code],
+                                  url=conf.watson_url,
+                                  user=conf.username))
