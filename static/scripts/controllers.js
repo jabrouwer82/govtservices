@@ -27,42 +27,6 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-// TabsController, controls navigation between different panes
-app.controller('TabsController', function ($scope, $location) {
-
-    // Define the tabs and sections the user can toggle between
-    $scope.tabs = [
-        {
-            title: "Analytics",
-            url: '#analytics',
-            activeUrl: '/analytics',
-            icon: 'fa-bar-chart'
-        },
-        {
-            title: "Database",
-            url: '#database',
-            activeUrl: '/database',
-            icon: 'fa-search'
-        },
-        {
-            title: "Manage Users",
-            url: '#manage-users',
-            activeUrl: '/manage-users',
-            icon: 'fa-user'
-        },
-        {
-            title: "Ask Watson",
-            url: '#ask-watson',
-            activeUrl: '/ask-watson',
-            icon: 'fa-globe'
-        }
-    ];
-
-    $scope.isActive = function(route) {
-        return route === $location.path();
-    }
-});
-
 app.controller('AnalyticsController', function ($scope) {
     $scope.title = 'AnalyticsController';
 })
