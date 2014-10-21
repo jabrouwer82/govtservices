@@ -71,6 +71,9 @@ app.controller('DatabaseController', function ($scope) {
     $scope.title = 'DatabaseController';
 })
 
+// TODO(matthewe|10-20-2014): Clean this up and the
+// ManageUserscontroller, separate this file into different
+// components
 app.filter('containsPartialMatch', function() {
     return function(items, letters) {
         var filtered = [];
