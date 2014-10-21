@@ -27,10 +27,6 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-app.controller('AnalyticsController', function ($scope) {
-    $scope.title = 'AnalyticsController';
-})
-
 app.controller('DatabaseController', function ($scope) {
     $scope.title = 'DatabaseController';
 })
