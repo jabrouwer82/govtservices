@@ -72,7 +72,71 @@ app.controller('DatabaseController', function ($scope) {
 })
 
 app.controller('ManageUsersController', function ($scope) {
-    $scope.title = 'ManageUsersController';
+    // TODO(matthewe|2014-10-20): This should come from an API
+    // call rather than being static. Endpoint needs to be set
+    // up
+    $scope.sponsors = [
+        {
+            name: 'Matt Ebeweber',
+            company: 'United Way',
+            title: 'Manager'
+        },
+        {
+            name: 'Bri Connelly',
+            company: 'United Way',
+            title: 'Manager'
+        },
+        {
+            name: 'Sai Avala',
+            company: 'United Way',
+            title: 'Caller'
+        },
+        {
+            name: 'Sai Avala',
+            company: 'United Way',
+            title: 'Caller'
+        },
+        {
+            name: 'Matt Ebeweber',
+            company: 'United Way',
+            title: 'Manager'
+        },
+        {
+            name: 'Bri Connelly',
+            company: 'United Way',
+            title: 'Manager'
+        },
+        {
+            name: 'Sai Avala',
+            company: 'United Way',
+            title: 'Caller'
+        },
+        {
+            name: 'Sai Avala',
+            company: 'United Way',
+            title: 'Caller'
+        },
+        {
+            name: 'Matt Ebeweber',
+            company: 'United Way',
+            title: 'Manager'
+        },
+        {
+            name: 'Bri Connelly',
+            company: 'United Way',
+            title: 'Manager'
+        },
+        {
+            name: 'Sai Avala',
+            company: 'United Way',
+            title: 'Caller'
+        },
+        {
+            name: 'Sai Avala',
+            company: 'United Way',
+            title: 'Caller'
+        }
+    ];
 })
 
 app.controller('AskWatsonController', function ($scope, $http) {

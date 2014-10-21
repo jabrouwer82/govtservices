@@ -1,3 +1,15 @@
 <div ng-controller="ManageUsersController">
-    {[{ title }]}
+    <div ng-repeat="sponsor in sponsors"
+        class="card-outer col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="card">
+
+            <div class="user-img">
+                <i class="user-icon fa fa-user fa-5x"></i>
+            </div>
+
+            <div class="card-name">{[{ sponsor.name }]}</div>
+            <div class="card-company">{[{ sponsor.company }]}</div>
+            <div class="card-title">{[{ sponsor.title }]}</div>
+        </div>
+    </div>
 </div>
