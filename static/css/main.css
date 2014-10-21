@@ -121,6 +121,9 @@ div.contents {
     padding-bottom: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
+
+    position: relative;
+    height: 300px;
 }
 
 .card .user-img {
@@ -156,6 +159,11 @@ div.contents {
     margin: 1px 0px;
 }
 
+.user-settings-icon {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+}
 /* ***************************** */
 /*  8) Content Section Styling   */
 /* ***************************** */
