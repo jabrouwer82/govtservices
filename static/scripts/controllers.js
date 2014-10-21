@@ -27,10 +27,6 @@ app.config(['$routeProvider', function($routeProvider) {
 
 }]);
 
-app.controller('DatabaseController', function ($scope) {
-    $scope.title = 'DatabaseController';
-})
-
 // TODO(matthewe|10-20-2014): Clean this up and the
 // ManageUserscontroller, separate this file into different
 // components
