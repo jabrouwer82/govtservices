@@ -8,9 +8,6 @@ handlers:
 - url: /static
   static_dir: static
 
-- url: /views
-  static_dir: views
-
 - url: /.*
   script: main.application
   login: admin

@@ -10,16 +10,16 @@ app.config(function($interpolateProvider) {
 // Define the applications routing and controllers for each
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/analytics', {
-        templateUrl: 'views/analytics.html',
+        templateUrl: 'static/views/analytics.html',
         controller: 'AnalyticsController'
     }).when('/database', {
-        templateUrl: 'views/database.html',
+        templateUrl: 'static/views/database.html',
         controller: 'DatabaseController'
     }).when('/manage-users', {
-        templateUrl: 'views/manage-users.html',
+        templateUrl: 'static/views/manage-users.html',
         controller: 'ManageUsersController'
     }).when('/ask-watson', {
-        templateUrl: 'views/ask-watson.html',
+        templateUrl: 'static/views/ask-watson.html',
         controller: 'AskWatsonController'
     }).otherwise({
         redirectTo: '/analytics'
