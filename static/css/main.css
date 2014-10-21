@@ -25,7 +25,6 @@ html, body {
     height: 100%;
 }
 
-
 /* *********************** */
 /*  2) Navbar Styling      */
 /* *********************** */
@@ -163,6 +162,15 @@ div.contents {
     position: absolute;
     right: 7px;
     top: 7px;
+}
+
+.title-bar h1 {
+    display: inline;
+}
+
+.user-search {
+    float: right;
+    width: 300px;
 }
 /* ***************************** */
 /*  8) Content Section Styling   */

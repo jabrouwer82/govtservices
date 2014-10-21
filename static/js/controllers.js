@@ -1,4 +1,4 @@
-var app = angular.module('211ServicesApp', ['ngRoute']);
+var app = angular.module('211ServicesApp', ['ngRoute', 'ngAnimate']);
 
 // Jinja2 & Angular use the same things to designate templing,
 // modify what is used.
@@ -71,72 +71,95 @@ app.controller('DatabaseController', function ($scope) {
     $scope.title = 'DatabaseController';
 })
 
-app.controller('ManageUsersController', function ($scope) {
+app.filter('containsPartialMatch', function() {
+    return function(items, letters) {
+        var filtered = [];
+        if (letters) {
+            for (var i = 0; i < items.length; i++) {
+                var result = items[i].name;
+                var matched = result.match(
+                    new RegExp(letters, 'i')
+                );
+                if (matched) {
+                    filtered.push(items[i])
+                };
+            }
+            return filtered;
+        } else {
+            return items;
+        }
+    }
+});
+
+app.controller('ManageUsersController', function ($scope, $timeout) {
     // TODO(matthewe|2014-10-20): This should come from an API
     // call rather than being static. Endpoint needs to be set
     // up
-    $scope.sponsors = [
-        {
-            name: 'Matt Ebeweber',
-            company: 'United Way',
-            title: 'Manager'
-        },
-        {
-            name: 'Bri Connelly',
-            company: 'United Way',
-            title: 'Manager'
-        },
-        {
-            name: 'Sai Avala',
-            company: 'United Way',
-            title: 'Caller'
-        },
-        {
-            name: 'Sai Avala',
-            company: 'United Way',
-            title: 'Caller'
-        },
-        {
-            name: 'Matt Ebeweber',
-            company: 'United Way',
-            title: 'Manager'
-        },
-        {
-            name: 'Bri Connelly',
-            company: 'United Way',
-            title: 'Manager'
-        },
-        {
-            name: 'Sai Avala',
-            company: 'United Way',
-            title: 'Caller'
-        },
-        {
-            name: 'Sai Avala',
-            company: 'United Way',
-            title: 'Caller'
-        },
-        {
-            name: 'Matt Ebeweber',
-            company: 'United Way',
-            title: 'Manager'
-        },
-        {
-            name: 'Bri Connelly',
-            company: 'United Way',
-            title: 'Manager'
-        },
-        {
-            name: 'Sai Avala',
-            company: 'United Way',
-            title: 'Caller'
-        },
-        {
-            name: 'Sai Avala',
-            company: 'United Way',
-            title: 'Caller'
-        }
-    ];
+    $scope.sponsors = [];
+    $timeout(function() {
+        $scope.sponsors = [
+            {
+                name: 'Matt Ebeweber',
+                company: 'United Way',
+                title: 'Manager'
+            },
+            {
+                name: 'Bri Connelly',
+                company: 'United Way',
+                title: 'Manager'
+            },
+            {
+                name: 'Sai Avala',
+                company: 'United Way',
+                title: 'Caller'
+            },
+            {
+                name: 'Sai Avala',
+                company: 'United Way',
+                title: 'Caller'
+            },
+            {
+                name: 'Matt Ebeweber',
+                company: 'United Way',
+                title: 'Manager'
+            },
+            {
+                name: 'Bri Connelly',
+                company: 'United Way',
+                title: 'Manager'
+            },
+            {
+                name: 'Sai Avala',
+                company: 'United Way',
+                title: 'Caller'
+            },
+            {
+                name: 'Sai Avala',
+                company: 'United Way',
+                title: 'Caller'
+            },
+            {
+                name: 'Matt Ebeweber',
+                company: 'United Way',
+                title: 'Manager'
+            },
+            {
+                name: 'Bri Connelly',
+                company: 'United Way',
+                title: 'Manager'
+            },
+            {
+                name: 'Sai Avala',
+                company: 'United Way',
+                title: 'Caller'
+            },
+            {
+                name: 'Sai Avala',
+                company: 'United Way',
+                title: 'Caller'
+            }
+        ];
+    });
 })
 
 app.controller('AskWatsonController', function ($scope, $http) {
