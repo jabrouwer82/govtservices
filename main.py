@@ -1,3 +1,4 @@
+import users
 import utils
 import watson
 import webapp2
@@ -11,5 +12,6 @@ class MainPage(utils.Handler):
 
 application = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/ask', watson.AskWatson)
+    ('/ask', watson.AskWatson),
+    ('/users', users.GetUsers)
 ], debug=True)
