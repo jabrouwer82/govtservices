@@ -11,8 +11,11 @@ class MainPage(utils.Handler):
 
 
 application = webapp2.WSGIApplication([
-    ('/', MainPage),
-    ('/ask', watson.AskWatson),
-    ('/users', users.GetUsers),
-    ('/user', users.AddUser)
+    ('/', MainPage)
+], debug=True)
+
+api = webapp2.WSGIApplication([
+    ('/api/ask', watson.AskWatson),
+    ('/api/users', users.GetUsers),
+    ('/api/user', users.AddUser)
 ], debug=True)

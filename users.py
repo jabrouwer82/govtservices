@@ -3,10 +3,12 @@ import utils
 
 from models.user import User
 from google.appengine.api import users
+from utils import authenticate
 
 class GetUsers(utils.Handler):
     '''Returns list of up to 20 users.'''
 
+    @authenticate
     def get(self):
         query = User.query()
         list_users = []
@@ -21,6 +23,7 @@ class GetUsers(utils.Handler):
 class AddUser(utils.Handler):
     '''Adds a user to the datastore.'''
 
+    @authenticate
     def post(self):
         user = User(account=users.get_current_user(),
                     name=self.request.get('name', ''),
@@ -29,6 +32,7 @@ class AddUser(utils.Handler):
                     admin=(u'on' == self.request.get('admin', False)))
         user.put()
 
+    @authenticate
     def get(self):
         self.response.out.write('''
               <html>

@@ -6,13 +6,14 @@ import logging
 import utils
 
 from google.appengine.api import urlfetch
+from utils import authenticate
 from watson_exceptions import ConfigurationError, WatsonError
-
 
 class AskWatson(utils.Handler):
     '''Given a question, query Watson for the answer.'''
 
     # Returns the entire json response
+    @authenticate
     def get(self):
         conf = config.CONFIG_DB
 
