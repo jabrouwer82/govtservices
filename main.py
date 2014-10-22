@@ -1,3 +1,4 @@
+import questions
 import users
 import utils
 import watson
@@ -17,5 +18,7 @@ application = webapp2.WSGIApplication([
 api = webapp2.WSGIApplication([
     ('/api/ask', watson.AskWatson),
     ('/api/users', users.GetUsers),
-    ('/api/user', users.AddUser)
+    ('/api/user', users.AddUser),
+    ('/api/questions', questions.GetQuestions),
+    ('/api/questions/phone_number', questions.GetQuestionsForPhoneNumber)
 ], debug=True)
