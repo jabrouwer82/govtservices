@@ -6,6 +6,7 @@ import logging
 import utils
 
 from google.appengine.api import urlfetch
+from models.question import Question
 from utils import authenticate
 from watson_exceptions import ConfigurationError, WatsonError
 
@@ -55,8 +56,19 @@ class AskWatson(utils.Handler):
                            payload=json.dumps(payload),
                            method=urlfetch.POST,
                            headers=headers)
-
+        
         if r.status_code == httplib.OK:
+            log = self.request.get('l')
+            if log:
+                response = json.loads(r.content)
+                answers = response['question']['answers']
+                answer = answers[0]['text']  if len(answers) > 0 else 'No answer given'
+                phone_number = self.request.get('p', 0)
+                q = Question(phone_number=phone_number,
+                             question=question,
+                             response=response,
+                             answer=answer)
+                q.put()
             self.render_json(r.content)
         else:
             raise WatsonError('Received a status code {code}: {status} when '
