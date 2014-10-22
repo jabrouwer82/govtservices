@@ -63,7 +63,7 @@ class AskWatson(utils.Handler):
                 response = json.loads(r.content)
                 answers = response['question']['answers']
                 answer = answers[0]['text']  if len(answers) > 0 else 'No answer given'
-                phone_number = self.request.get('p', 0)
+                phone_number = int(self.request.get('p', '0'))
                 q = Question(phone_number=phone_number,
                              question=question,
                              response=response,
