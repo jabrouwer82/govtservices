@@ -34,16 +34,4 @@ class AddUser(utils.Handler):
 
     @authenticate
     def get(self):
-        self.response.out.write('''
-              <html>
-                <body>
-                  <form method="post">
-                    <p>Name: <input type="text" name="name" /></p>
-                    <p>Title: <input type="text" name="title" /></p>
-                    <p>Company: <input type="text" name="company" /></p>
-                    <p>Admin?: <input type="checkbox" name="admin" /></p>
-                    <p><input type="submit" /></p>
-                  </form>
-                </body>
-              </html>
-            ''')
+        self.render_template('user.html')
