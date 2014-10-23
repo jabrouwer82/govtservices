@@ -5,6 +5,10 @@ class WatsonError(Exception):
     def __str__(self):
         return repr(self.value)
 
-class AuthenticationError(WatsonError): pass
 
-class ConfigurationError(WatsonError): pass
+class AuthenticationError(WatsonError):
+    pass
+
+
+class ConfigurationError(WatsonError):
+    pass

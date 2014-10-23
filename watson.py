@@ -10,6 +10,7 @@ from models.question import Question
 from utils import authenticate
 from watson_exceptions import ConfigurationError, WatsonError
 
+
 class AskWatson(utils.Handler):
     '''Given a question, query Watson for the answer.'''
 
@@ -56,13 +57,13 @@ class AskWatson(utils.Handler):
                            payload=json.dumps(payload),
                            method=urlfetch.POST,
                            headers=headers)
-        
+
         if r.status_code == httplib.OK:
             log = self.request.get('l')
             if log:
                 response = json.loads(r.content)
                 answers = response['question']['answers']
-                answer = answers[0]['text']  if len(answers) > 0 else 'No answer given'
+                answer = answers[0]['text'] if len(answers) > 0 else 'No answer given'
                 phone_number = int(self.request.get('p', '0'))
                 q = Question(phone_number=phone_number,
                              question=question,

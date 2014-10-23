@@ -49,9 +49,10 @@ def is_authenticated(request):
     else:
         return False
 
+
 def authenticate(func):
     def authenticate_and_call(self):
-        if not is_authenticated(self.request): 
+        if not is_authenticated(self.request):
             raise AuthenticationError('Unable to authenticate request. Please try again with the appropriate credentials.')
         return func(self)
     return authenticate_and_call

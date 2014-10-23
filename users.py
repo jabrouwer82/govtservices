@@ -5,6 +5,7 @@ from models.user import User
 from google.appengine.api import users
 from utils import authenticate
 
+
 class GetUsers(utils.Handler):
     '''Returns list of up to 20 users.'''
 
@@ -19,6 +20,7 @@ class GetUsers(utils.Handler):
 
         output = json.dumps(list_users)
         self.render_json(output)
+
 
 class AddUser(utils.Handler):
     '''Adds a user to the datastore.'''

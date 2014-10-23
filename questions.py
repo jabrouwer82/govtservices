@@ -4,6 +4,7 @@ import utils
 from models.question import Question
 from utils import authenticate
 
+
 class GetQuestions(utils.Handler):
     '''Returns list of up to 20 questions.'''
     # TODO(jabrouwer82): Change this to merge questions by phone number.
@@ -14,10 +15,12 @@ class GetQuestions(utils.Handler):
         list_questions = []
         for question_object in query.fetch(limit=20):
             list_questions.append({'phone_number': question_object.phone_number,
-                                   'time': str(question_object.time)})
+                                   'time': str(question_object.time),
+                                   'question': question_object.question})
 
         output = json.dumps(list_questions)
         self.render_json(output)
+
 
 class GetQuestionsForPhoneNumber(utils.Handler):
     '''Returns list of up to 20 questions for the given phone number.'''
