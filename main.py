@@ -1,3 +1,4 @@
+import businesses
 import questions
 import users
 import utils
@@ -20,5 +21,6 @@ api = webapp2.WSGIApplication([
     ('/api/users', users.GetUsers),
     ('/api/user', users.AddUser),
     ('/api/questions', questions.GetQuestions),
-    ('/api/questions/phone_number', questions.GetQuestionsForPhoneNumber)
+    ('/api/questions/phone_number', questions.GetQuestionsForPhoneNumber),
+    ('/api/business', businesses.AddBusiness)
 ], debug=True)
