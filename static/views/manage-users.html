@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div ng-repeat="sponsor in sponsors | filter:q"
+    <div ng-repeat="user in users | filter:q"
         class="card-outer col-lg-3 col-md-4 col-sm-6 col-xs-12">
         <div class="card">
             <i class="user-settings-icon fa fa-gear fa-2x"></i>
@@ -24,9 +24,9 @@
                 <i class="user-icon fa fa-user fa-5x"></i>
             </div>
 
-            <div class="card-name">{[{ sponsor.name }]}</div>
-            <div class="card-company">{[{ sponsor.company }]}</div>
-            <div class="card-title">{[{ sponsor.title }]}</div>
+            <div class="card-name">{[{ user.name }]}</div>
+            <div class="card-company">{[{ user.company }]}</div>
+            <div class="card-title">{[{ user.title }]}</div>
         </div>
     </div>
 </div>
