@@ -2,6 +2,9 @@
 import jinja2
 import os
 import webapp2
+import config
+
+from watson_exceptions import AuthenticationError
 
 jinja_environment = jinja2.Environment(
     autoescape=True,
@@ -15,7 +18,7 @@ class Handler(webapp2.RequestHandler):
     """General request handler including helper methods and other general
     handling"""
 
-    def render_template(self, template_name, contents):
+    def render_template(self, template_name, **contents):
         """Helper method to render the template with the appropriate contents.
 
         :type template_name: string
@@ -33,3 +36,23 @@ class Handler(webapp2.RequestHandler):
     def render_json(self, json_txt):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json_txt)
+
+
+def is_authenticated(request):
+    '''This is a super shitty authentication, and desperatly needs to be migrated to something the resembles something secure before this goes public.'''
+    # Don't worry about auth if in local DEV mode
+    if config.DEV:
+        return True
+    # If our secret z bit is set
+    elif request.get('z') == '1':
+        return True
+    else:
+        return False
+
+
+def authenticate(func):
+    def authenticate_and_call(self):
+        if not is_authenticated(self.request):
+            raise AuthenticationError('Unable to authenticate request. Please try again with the appropriate credentials.')
+        return func(self)
+    return authenticate_and_call
