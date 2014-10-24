@@ -23,6 +23,7 @@
 html, body {
     width: 100%;
     height: 100%;
+    background-color: #ecf0f1;
 }
 
 /* *********************** */
@@ -112,7 +113,7 @@ div.contents {
 }
 
 .card {
-    background-color: #ecf0f1;
+    background-color: #ffffff;
     max-width: 250px;
     margin: auto;
 
