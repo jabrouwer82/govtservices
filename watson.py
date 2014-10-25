@@ -69,6 +69,7 @@ class AskWatson(utils.Handler):
                              question=question,
                              response=response,
                              answer=answer)
+                logging.info('Inserting question into datastore')
                 q.put()
             self.render_json(r.content)
         else:

@@ -1,22 +1,37 @@
+import itertools
 import json
 import utils
 
+from datetime import datetime
 from models.question import Question
 from utils import authenticate
 
 
 class GetQuestions(utils.Handler):
     '''Returns list of up to 20 questions.'''
-    # TODO(jabrouwer82): Change this to merge questions by phone number.
 
     @authenticate
     def get(self):
         query = Question.query()
+        query.order(Question.phone_number)
         list_questions = []
-        for question_object in query.fetch(limit=20):
-            list_questions.append({'phone_number': question_object.phone_number,
-                                   'time': str(question_object.time),
-                                   'question': question_object.question})
+
+        def group_by_phone_number(value):
+            return value.phone_number
+
+        for phone_number, questions in itertools.groupby(query.fetch(limit=40),
+                                                 group_by_phone_number):
+            most_recent = datetime.min
+            count = 0
+            for question in questions:
+                count += 1
+                if not question.time is None and question.time > most_recent:
+                    most_recent = question.time
+            
+            list_questions.append({'phone_number': phone_number,
+                                   'last_call_date': str(most_recent),
+                                   'number_of_questions': count
+                                  })
 
         output = json.dumps(list_questions)
         self.render_json(output)
