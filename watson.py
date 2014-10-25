@@ -5,8 +5,10 @@ import json
 import logging
 import utils
 
+from datetime import datetime
 from google.appengine.api import urlfetch
 from models.question import Question
+from models.stats import Stats
 from utils import authenticate
 from watson_exceptions import ConfigurationError, WatsonError
 
@@ -59,18 +61,11 @@ class AskWatson(utils.Handler):
                            headers=headers)
 
         if r.status_code == httplib.OK:
+            
             log = self.request.get('l')
             if log:
-                response = json.loads(r.content)
-                answers = response['question']['answers']
-                answer = answers[0]['text'] if len(answers) > 0 else 'No answer given'
-                phone_number = int(self.request.get('p', '0'))
-                q = Question(phone_number=phone_number,
-                             question=question,
-                             response=response,
-                             answer=answer)
-                logging.info('Inserting question into datastore')
-                q.put()
+              self.log(question, r)
+
             self.render_json(r.content)
         else:
             raise WatsonError('Received a status code {code}: {status} when '
@@ -80,3 +75,29 @@ class AskWatson(utils.Handler):
                                   status=httplib.responses[r.status_code],
                                   url=conf.watson_url,
                                   user=conf.username))
+
+    def log(self, question, r):
+        logging.info('Updating datastore with question.')
+        # Insert question into datastore
+        response = json.loads(r.content)
+        answers = response['question']['answers']
+        answer = answers[0]['text'] if len(answers) > 0 else 'No answer given'
+        phone_number = int(self.request.get('p', '0'))
+        q = Question(phone_number=phone_number,
+                     question=question,
+                     response=response,
+                     answer=answer)
+        q.put()
+
+        # Update user stats
+        # This isn't atomic, I don't think it's a big deal though.
+        user = Stats.query(Stats.phone_number == phone_number).fetch()
+        if len(user) > 0:
+          user = user[0]
+        else:
+          user = Stats(phone_number=phone_number,
+                       number_of_questions=0,
+                       most_recent_question=datetime.min)
+        user.number_of_questions += 1
+        user.most_recent_question = q.time
+        user.put()
