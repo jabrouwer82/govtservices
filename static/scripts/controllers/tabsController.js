@@ -44,7 +44,9 @@ angular.module('211ServicesApp').controller(
         @param {String} route - the current active route
         */
         $scope.isActive = function(route) {
-            return route === $location.path();
+            // TOOD(matthewe|2014-10-26): This is pretty ugly,
+            // rewrite the way we detect active tabs
+            return route.split("/")[1] === $location.path().split("/")[1];
         }
     }
 );

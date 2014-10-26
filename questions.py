@@ -4,6 +4,7 @@ import utils
 
 from datetime import datetime
 from models.stats import Stats
+from models.question import Question
 from utils import authenticate
 
 

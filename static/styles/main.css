@@ -123,6 +123,22 @@ http://stackoverflow.com/questions/20825211/
    background-color: rgba(189, 195, 199, .5);
  }
 
+ .question-card {
+    width: 96%;
+    margin: 20px 2%;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+
+    position: relative;
+}
+
+.question-card .question-time {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
 
 /* ***************************** */
 /*  7) Manage User Styling       */

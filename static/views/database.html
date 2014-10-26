@@ -1,24 +1,43 @@
-<div ng-controller="DatabaseController">
+<div>
     <div class="title-bar container">
-        <h1>Database</h1>
-        <input type="text" class="user-search form-control"
-            placeholder="888-888-8888" ng-model="q.phone_number">
+        <h1>Usage <span ng-if="number">for {[{ number }]}</span></h1>
+        <div ng-if="number === undefined">
+            <input
+            type="text" class="user-search form-control"
+            placeholder="888-888-8888" ng-model="$parent.q.phone_number">
+        </div>
     </div>
 
-    <table class="question-table table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>Phone Number</th>
-                <th>Number of Calls</th>
-                <th>Last Call Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="question in questions | filter:q">
-                <td>{[{ question.phone_number }]}</td>
-                <td>{[{ question.number_of_questions }]}</td>
-                <td>{[{ question.last_call_date }]}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- General View -->
+    <div ng-if="number === undefined">
+        <table class="question-table table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Phone Number</th>
+                    <th>Number of Calls</th>
+                    <th>Last Call Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="question in questions | filter:q">
+                    <td>
+                        <a href="#database/{[{ question.phone_number }]}">
+                            {[{ question.phone_number }]}
+                        </a>
+                    </td>
+                    <td>{[{ question.number_of_questions }]}</td>
+                    <td>{[{ question.last_call_date }]}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="number !== undefined">
+        <div class="question-card" ng-repeat="question in askedQuestions">
+            <div class="question-time">{[{ question.time }]}</div>
+            <h4>Question</h4>
+            <div class="question-asked">{[{ question.question }]}</div>
+            <h4>Answer</h4>
+            <div class="question-answer">{[{ question.answer }]}</div>
+        </div>
+    </div>
 </div>
