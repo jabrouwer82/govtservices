@@ -1,11 +1,11 @@
 <div>
-    <div class="title-bar container">
+    <div class="title-bar">
         <h1>Usage <span ng-if="number">for {[{ number }]}</span></h1>
-        <div ng-if="number === undefined">
+        <span ng-if="number === undefined">
             <input
             type="text" class="user-search form-control"
             placeholder="888-888-8888" ng-model="$parent.q.phone_number">
-        </div>
+        </span>
     </div>
 
     <!-- General View -->

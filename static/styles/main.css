@@ -200,6 +200,11 @@ http://stackoverflow.com/questions/20825211/
     top: 7px;
 }
 
+.title-bar {
+    width: 90%;
+    margin-left: 5%;
+}
+
 .title-bar h1 {
     display: inline;
 }
