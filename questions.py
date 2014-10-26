@@ -14,14 +14,13 @@ class GetQuestions(utils.Handler):
     def get(self):
         query = Stats.query()
         stats = []
-        
+
         for stat in query.fetch():
             stats.append({'phone_number': stat.phone_number,
                           'last_call_date': str(stat.most_recent_question),
                           'number_of_questions': stat.number_of_questions
                          })
-            
-        
+
         output = json.dumps(stats)
         self.render_json(output)
 
@@ -34,11 +33,11 @@ class GetQuestionsForPhoneNumber(utils.Handler):
         phone_number = int(self.request.get('p'))
         query = Question.query()
         query = query.filter(Question.phone_number == phone_number)
-        
+
         questions = []
         most_recent = datetime.min
         count = 0
-        
+
         for question in query.fetch():
             count += 1
             if not question.time is None and question.time > most_recent:
