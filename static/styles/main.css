@@ -192,8 +192,10 @@ http://stackoverflow.com/questions/20825211/
     float: right;
     width: 300px;
 }
+
+
 /* ***************************** */
-/*  8) Content Section Styling   */
+/*  8) Ask Watson Styling        */
 /* ***************************** */
 input.question-input {
     width: 60%;

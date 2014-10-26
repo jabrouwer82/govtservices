@@ -12,14 +12,20 @@ angular.module('211ServicesApp').controller(
 
         $scope.askQuestion = function() {
             $scope.loading = true;
+            $scope.results = null;
 
-            $http.get('/ask', {
-                question: 'things things and more things'
+            $http.get('/api/ask', {
+                params: {
+                    q: $scope.searchQuestion,
+                    z: 1, l: 1, p: 0
+                }
             }).success(function(data, status, headers, config) {
-                scope.loading = false;
+                $scope.loading = false;
+                $scope.results = data;
             }).error(function(data, status, headers, config) {
                 // TODO(matthewe|2014-10-17): Handle the error
                 $scope.loading = false;
+                $scope.results = data;
             });
         };
     }

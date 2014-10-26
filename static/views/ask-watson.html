@@ -6,7 +6,7 @@
             class="form-control question-input"
             id="askWatsonQuestion"
             placeholder="Where can I find the nearest foodbank?"
-            ng-value="searchQuestion">
+            ng-model="searchQuestion">
         <div class="btn btn-large btn-primary question-btn"
             ng-click="askQuestion()">Ask Question</div>
     </form>
@@ -19,6 +19,6 @@
 
     <div class="results">
         <h4>Results</h4>
-
+        <pre ng-if="results">{[{ results | json }]}</pre>
     </div>
 </div>
