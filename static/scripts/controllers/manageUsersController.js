@@ -28,7 +28,7 @@ angular.module('211ServicesApp').controller(
             newUser = $scope.User;
             $scope.users.push(newUser);
             $scope.User = {};
-            $scope.add-user-form.$setPristine();
+            $scope.add-user-form.$setPristine(); 
         }
     }
 
