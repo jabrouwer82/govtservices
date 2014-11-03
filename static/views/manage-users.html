@@ -6,12 +6,25 @@
     </div>
 
     <div class="card-outer col-lg-3 col-md-4 col-sm-6 col-xs-12">
-        <div class="card">
+        <div class="card" ng-click="toggle = !toggle" ng-show="!toggle">
             <div class="user-img">
                 <i class="user-icon fa fa-plus fa-5x"></i>
             </div>
 
-            <div class="card-name">Add User</div>
+            <div class="card-name" >Add User</div>
+        </div>
+        <div class="card" ng-show="toggle" ng-model="User">
+            <form  ng-submit="submitUser()" name="add-user-form">
+                <input type="text" class="card-name" placeholder="Name" ng-model="User.name"><br>
+
+                <input type="text" class="card-company" placeholder="Company" ng-model="User.company"><br>
+
+                <input type="text" class="card-title" placeholder="Title" ng-model="User.title"><br>
+
+                <button type="submit">Submit</button>
+
+                <button type="reset" ng-click="toggle = !toggle">Cancel</button>
+            </form>
         </div>
     </div>
 
