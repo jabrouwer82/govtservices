@@ -22,5 +22,6 @@ api = webapp2.WSGIApplication([
     ('/api/user', users.AddUser),
     ('/api/questions', questions.GetQuestions),
     ('/api/questions/phone_number', questions.GetQuestionsForPhoneNumber),
-    ('/api/business', businesses.AddBusiness)
+    ('/api/business', businesses.AddBusiness),
+    ('/api/business/review', businesses.AddReview)
 ], debug=True)
