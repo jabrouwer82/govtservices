@@ -17,7 +17,8 @@ angular.module('211ServicesApp').controller(
             $scope.$on('$routeChangeSuccess', function() {
                 $http.get('/api/questions/phone_number', {
                     params: {
-                        'p': parseInt($scope.number)
+                        'p': parseInt($scope.number),
+                        'z': 1
                     }
                 }).
                 success(function(data, status, headers, config) {
@@ -36,7 +37,11 @@ angular.module('211ServicesApp').controller(
             // Only load the questions when this route is being viewed
             // http://stackoverflow.com/questions/15458609/angular-js-how-to-execute-function-on-page-load
             $scope.$on('$routeChangeSuccess', function() {
-                $http.get('/api/questions').
+                $http.get('/api/questions', {
+                    params: {
+                        'z': 1
+                    }
+                }).
                 success(function(data, status, headers, config) {
                     $scope.questions = data;
                 }).
