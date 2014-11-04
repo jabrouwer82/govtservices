@@ -15,11 +15,11 @@
         </div>
         <div class="card" ng-show="toggle" ng-model="User">
             <form  ng-submit="submitUser()" name="add-user-form">
-                <input type="text" class="card-name" placeholder="Name" ng-model="User.name"><br>
+                <input type="text" name="name" class="card-name" placeholder="Name" ng-model="User.name"><br>
 
-                <input type="text" class="card-company" placeholder="Company" ng-model="User.company"><br>
+                <input type="text" name="company" class="card-company" placeholder="Company" ng-model="User.company"><br>
 
-                <input type="text" class="card-title" placeholder="Title" ng-model="User.title"><br>
+                <input type="text" name="title" class="card-title" placeholder="Title" ng-model="User.title"><br>
 
                 <button type="submit">Submit</button>
 

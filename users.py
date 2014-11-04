@@ -27,11 +27,14 @@ class AddUser(utils.Handler):
 
     @authenticate
     def post(self):
+
+        request_dict = json.loads(self.request.body)
+
         user = User(account=users.get_current_user(),
-                    name=self.request.get('name', ''),
-                    title=self.request.get('title', ''),
-                    company=self.request.get('company', ''),
-                    admin=(u'on' == self.request.get('admin', False)))
+                    name=request_dict.get('name', ''),
+                    title=request_dict.get('title', ''),
+                    company=request_dict.get('company', ''),
+                    admin=(u'on' == request_dict.get('admin', False)))
         user.put()
 
     @authenticate

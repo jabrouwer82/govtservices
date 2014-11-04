@@ -8,7 +8,7 @@ angular.module('211ServicesApp').controller(
     function ($scope, $http, $timeout) {
 
         // TODO(matthewe|2014-10-20): Hook this up to the API
-        $http.get('api/usersl').success(function(data, status, headers, config){
+        $http.get('api/users').success(function(data, status, headers, config){
             $scope.users = data;}).
         error(function(data){
             $scope.users = [{
@@ -25,10 +25,22 @@ angular.module('211ServicesApp').controller(
 
         $scope.submitUser = function(){
             $scope.toggle = !$scope.toggle;
-            newUser = $scope.User;
+            var newUser = {
+                'name' : $scope.User.name,
+                'company' : $scope.User.company,
+                'title' : $scope.User.title
+            };
+
+            var $promise = $http({
+                url: 'api/user',
+                method: "POST",
+                data: $scope.User
+            });
+
             $scope.users.push(newUser);
+            // result = $http.post('api/user', $scope.User, {});
             $scope.User = {};
-            $scope.add-user-form.$setPristine(); 
+            $scope.add-user-form.$setPristine();
         }
     }
 
