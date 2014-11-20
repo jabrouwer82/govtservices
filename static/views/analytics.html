@@ -1,3 +1,11 @@
-<div>
-    {[{ title }]}
+<div class="analytics-content">
+    <div>
+        <select>
+            <option>Questions Past 60 Days</option>
+            <option>Question Category Breakdown</option>
+            <option>User Location</option>
+        </select>
+    </div>
+
+    <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="800" height="400"></canvas>
 </div>

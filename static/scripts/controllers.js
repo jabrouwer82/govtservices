@@ -1,4 +1,5 @@
-var app = angular.module('211ServicesApp', ['ngRoute', 'ngAnimate']);
+var app = angular.module('211ServicesApp',
+                         ['ngRoute', 'ngAnimate', 'tc.chartjs']);
 
 // Jinja2 & Angular use the same things to designate templing,
 // modify what is used for templating

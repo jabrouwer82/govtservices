@@ -104,6 +104,15 @@ div.contents {
     padding-top: 100px;
 }
 
+/* ***************************** */
+/*  4) Analytics Section Styling */
+/* ***************************** */
+.analytics-content {
+    width: 100%;
+    margin-top: 25px;
+    text-align: center;
+}
+
 
 /* ***************************** */
 /*  6) Database Section
