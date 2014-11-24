@@ -14,9 +14,7 @@ class GetUsers(utils.Handler):
         query = User.query()
         list_users = []
         for user_object in query.fetch(limit=20):
-            list_users.append({'name': user_object.name,
-                               'title': user_object.title,
-                               'company': user_object.company})
+            list_users.append(user_object.to_dict())
 
         output = json.dumps(list_users)
         self.render_json(output)
@@ -28,13 +26,11 @@ class AddUser(utils.Handler):
     @authenticate
     def post(self):
 
-        request_dict = json.loads(self.request.body)
-
         user = User(account=users.get_current_user(),
-                    name=request_dict.get('name', ''),
-                    title=request_dict.get('title', ''),
-                    company=request_dict.get('company', ''),
-                    admin=(u'on' == request_dict.get('admin', False)))
+                    name=self.request.get('name', ''),
+                    title=self.request.get('title', ''),
+                    company=self.request.get('company', ''),
+                    admin=(u'on' == self.request.get('admin', False)))
         user.put()
 
     @authenticate
