@@ -8,6 +8,7 @@ import utils
 from datetime import datetime
 from google.appengine.api import urlfetch
 from models.question import Question
+from models.business import Business
 from models.stats import Stats
 from utils import authenticate
 from watson_exceptions import ConfigurationError, WatsonError
@@ -62,11 +63,13 @@ class AskWatson(utils.Handler):
 
         if r.status_code == httplib.OK:
             
+            answers = self.format_answer(r)
+
             log = self.request.get('l')
             if log:
-              self.log(question, r)
+              self.log(question, answers)
 
-            self.render_json(r.content)
+            self.render_json(json.dumps(answers))
         else:
             raise WatsonError('Received a status code {code}: {status} when '
                               'accessing Watson at {url} with username: '
@@ -76,12 +79,29 @@ class AskWatson(utils.Handler):
                                   url=conf.watson_url,
                                   user=conf.username))
 
-    def log(self, question, r):
+    def format_answer(self, r):
+        watson_response = json.loads(r.content)
+        answers = {}
+        answers['answers'] = []
+        for x in xrange(3):
+            text = watson_response['question']['answers'][x]
+            document = watson_response['question']['evidencelist'][x]['metadataMap']['title']
+            service_name = document.split(' : ')[1]
+            services = Business.query(Business.name == service_name).fetch()
+            service = services[0].to_dict() if len(services) > 0 else []
+            answer = {'answer': text,
+                      'service': service,
+                      'id': x
+                     }
+            answers['answers'].append(answer)
+        return answers
+
+
+    def log(self, question, response):
         logging.info('Updating datastore with question.')
         # Insert question into datastore
-        response = json.loads(r.content)
-        answers = response['question']['answers']
-        answer = answers[0]['text'] if len(answers) > 0 else 'No answer given'
+        answers = response['answers']
+        answer = answers[0]['answer'] if len(answers) > 0 else 'No answer given'
         phone_number = int(self.request.get('p', '0'))
         q = Question(phone_number=phone_number,
                      question=question,

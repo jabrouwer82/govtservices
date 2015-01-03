@@ -14,7 +14,7 @@ class GetBusiness(utils.Handler):
     @authenticate
     def get(self):
         curs = Cursor(urlsafe=self.request.get('cursor')) 
-        businesses, next_curs, more = Business.query().fetch_page(5, start_cursor=curs)
+        businesses, next_curs, more = Business.query().fetch_page(10, start_cursor=curs)
         list_businesses = []
         for business_object in businesses:
             list_businesses.append(business_object.to_dict())
@@ -32,15 +32,12 @@ class AddBusiness(utils.Handler):
         business = Business(unique_id=self.request.get('unique_id', ''),
                             details=self.request.get('details', ''),
                             name=self.request.get('name', ''),
-                            phone_number=int(self.request.get('phone_number', '0')),
+                            phone_number=self.request.get('phone_number', ''),
                             url=self.request.get('url', ''),
                             description=self.request.get('description', ''),
-                            hours=self.request.get('hours', ''),
-                            street_address=self.request.get('street_address', ''),
-                            city=self.request.get('city', ''),
-                            zip_code=self.request.get('zip_code', ''),
-                            image=self.request.get('image', ''),
-                            categories=self.request.get('categories', '')
+                            physical_address=self.request.get('physical_address', ''),
+                            mailing_address=self.request.get('mailing_address', ''),
+                            taxonomy=self.request.get('taxonomy', '')
                            )
         business.put()
 
