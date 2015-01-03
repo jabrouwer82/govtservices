@@ -8,6 +8,8 @@ angular.module('211ServicesApp').controller(
     'AnalyticsController',
     function ($scope) {
 
+        $scope.selection = 1;
+
         $scope.data = {
             labels: ["January", "February", "March", "April", "May", "June", "July"],
             datasets: [
@@ -33,7 +35,16 @@ angular.module('211ServicesApp').controller(
                 }
             ]
         };
-
         var options = {};
+
+
+        $scope.myData = [
+          { value : 50, color : "#2ecc71", label: 'Food' },
+          { value : 90, color : "#e67e22", label: 'Shelter' },
+          { value : 75, color : "#e74c3c", label: 'Clothing' },
+          { value : 30, color : "#3498db", label: 'Job Resources'}
+        ];
+        $scope.myOptions = {};
+
     }
 );

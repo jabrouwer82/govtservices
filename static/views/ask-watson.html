@@ -19,6 +19,19 @@
 
     <div class="results">
         <h4>Results</h4>
-        <pre ng-if="results">{[{ results | json }]}</pre>
+        <div ng-if="results">
+            <div ng-repeat="answer in results['question']['answers']"
+                class="confidence-card">
+                <span class="confidence">
+                    <b>{[{ $index+1 }]}.</b>
+                    {[{ answer['text'].substr(35, answer['text'].length) }]}
+                </span>
+
+                <span class="feedback">
+                    <i class="feedback-icon fa fa-thumbs-up fa-4x"></i>
+                    <i class="feedback-icon fa fa-thumbs-down fa-4x"></i>
+                </span>
+            </div>
+        <div>
     </div>
 </div>

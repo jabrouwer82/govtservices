@@ -1,11 +1,22 @@
 <div class="analytics-content">
-    <div>
-        <select>
-            <option>Questions Past 60 Days</option>
-            <option>Question Category Breakdown</option>
-            <option>User Location</option>
+    <div class="analytics-dropdown">
+        <select ng-model="selection" class="form-control">
+            <option value="1">Questions Past 60 Days</option>
+            <option value="2">Question Category Breakdown</option>
+            <option value="3">User Location</option>
         </select>
     </div>
 
-    <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="800" height="400"></canvas>
+    <span ng-if="selection == 1">
+        <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="800" height="400"></canvas>
+    </span>
+
+    <span ng-if="selection == 2">
+        <canvas tc-chartjs-pie chart-data="myData" chart-options="myOptions" width="500" height="500" auto-legend></canvas>
+    </span>
+
+    <span ng-if="selection == 3">
+        <iframe width="1280" height="750" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?zoom=12&center=30.2672%2C-97.7431&key=AIzaSyDjJC7JkKu84SlCdkMqzocOTALZDDAPFwE&q=food+shelters+austin"></iframe>
+    </span>
+
 </div>

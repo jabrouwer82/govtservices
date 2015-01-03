@@ -113,6 +113,34 @@ div.contents {
     text-align: center;
 }
 
+.analytics-dropdown {
+    padding-bottom: 25px;
+    width: 300px;
+    margin: auto;
+}
+
+ul.pie-legend {
+    list-style-type: none;
+
+    position: absolute;
+    top: 375px;
+    right: 400px;
+}
+
+ul.pie-legend li {
+    display: block;
+    float: left;
+    clear:both;
+    padding:10px;
+}
+ul.pie-legend li span {
+    width:25px;
+    height:25px;
+    display:block;
+    float:left;
+    margin-right:10px;
+}
+
 
 /* ***************************** */
 /*  6) Database Section
@@ -241,3 +269,33 @@ div.progress {
     height: 20px;
     margin: 10px 0px;
 }
+
+.confidence-card {
+    background-color: white;
+    height: 115px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.confidence {
+    vertical-align: middle;
+    margin-left: 25px;
+    font-size: 1.5em;
+    line-height: 115px;
+}
+
+.feedback {
+    float: right;
+    padding: 30px;
+}
+.feedback i {
+    padding-left: 15px;
+}
+.feedback-icon:nth-of-type(1) {
+    color: #2ecc71;
+}
+.feedback-icon:nth-of-type(2) {
+    color: #e74c3c;
+}
+
