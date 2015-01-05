@@ -32,20 +32,103 @@ class AskWatson(utils.Handler):
                                      'config master entry to include your '
                                      'username and password')
 
+        # Fetch singe-pass answers (ask Watson the question as given)
+        
+        # Load question from request, with a given default.
+        question = self.request.get('q', 'Where can I find food for my pet?')
+        sp_payload = {
+            'question': {
+                'questionText': question
+            }
+        }
+        logging.info('Asking Watson: "{q}"'.format(q=question))
+        sp_answers = self.query_watson(conf, sp_payload)
+
+        full_answer = self.request.get('sf')
+        if full_answer:
+            self.render_json(json.dumps(sp_answers))
+            return
+        
+        # Double-pass query. 
+        # TODO(jabrouwer82): Fix the payload and change the conditional.
+        # First query Watson restricted to our question doc
+        # Use the title of that answer as the question for the second query
+        # This payload does not work, but will be left in for future debugging. 
+        dp_p1_payload = {
+            'question': {
+                'questionText': question,
+                'filters': [{
+                    'filterType': 'metadataFilter',
+                    'fieldName': 'indexedKey.originalfile',
+                    'values': [
+                        'meta-question-doc.html'
+                    ]
+                }]
+            }
+        }
+        logging.info('Asking Watson: "{q}"'.format(q=question))
+        dp_p1_answers = self.query_watson(conf, sp_payload)
+        full_answer = self.request.get('d1f')
+        if full_answer:
+            self.render_json(json.dumps(dp_p1_answers))
+            return
+        
+        dp_p2_answers = dp_p1_answers
+        # TODO(jabrouwer82): This isn't how this should be done, fix it.
+        if dp_p1_answers['question']['evidencelist'][0]['metadataMap']['originalfile'] == 'meta-question-doc.html':
+            dp_p2_question = dp_p1_answers['question']['answers'][0]['text'].split(' : ')[1]
+            sp_payload['question']['questionText'] = dp_p2_question
+            dp_p2_answers = self.query_watson(conf, sp_payload)
+            full_answer = self.request.get('d2f')
+            if full_answer:
+                self.render_json(json.dumps(dp_p2_answers))
+                return
+        
+        answers = self.merge_answers(sp_answers, dp_p2_answers)
+        
+        log = self.request.get('l')
+        if log:
+            self.log(question, answers)
+        
+        self.render_json(json.dumps(answers))
+
+    def merge_answers(self, first, second):
+        # TODO(jabrouwer82): Implement an option to return merged, unformatted answers
+        answers = {}
+        answers['answers'] = []
+        first_index = 0
+        second_index = 0
+        for x in xrange(5):
+            first_answer = first['question']['answers'][first_index]
+            second_answer = second['question']['answers'][second_index]
+            
+            if first_answer['confidence'] > second_answer['confidence']:
+                answer = first_answer
+                document = first['question']['evidencelist'][first_index]['metadataMap']['title']
+                first_index += 1
+            else:
+                answer = second_answer
+                document = second['question']['evidencelist'][second_index]['metadataMap']['title']
+                second_index += 1
+
+            service_name = document.split(' : ')[1]
+            services = Business.query(Business.name == service_name).fetch()
+            service = services[0].to_dict() if len(services) > 0 else []
+            response = {'answer': answer,
+                        'service': service,
+                        'id': x
+                       }
+            answers['answers'].append(response)
+        return answers
+
+
+
+    def query_watson(self, conf, payload):
         # Standard HTTP basic authorization, base 64 encode username:password
         auth = 'Basic ' + base64.b64encode(
                '{username}:{password}'.format(
                    username=conf.username,
                    password=conf.password))
-
-        # Load question from request, with a given default.
-        question = self.request.get('q', 'Where can I find food for my pet?')
-        logging.info("Asking Watson: '{q}'".format(q=question))
-        payload = {
-            'question': {
-                'questionText': question
-            }
-        }
 
         headers = {
             'Authorization': auth,
@@ -62,39 +145,17 @@ class AskWatson(utils.Handler):
                            headers=headers)
 
         if r.status_code == httplib.OK:
-            
-            answers = self.format_answer(r)
+            answers = json.loads(r.content)
+            return answers
 
-            log = self.request.get('l')
-            if log:
-              self.log(question, answers)
-
-            self.render_json(json.dumps(answers))
         else:
-            raise WatsonError('Received a status code {code}: {status} when '
+            raise WatsonError('Received a status code {code}: {content}  when '
                               'accessing Watson at {url} with username: '
                               '{user}'.format(
                                   code=r.status_code,
-                                  status=httplib.responses[r.status_code],
+                                  content=r.content,
                                   url=conf.watson_url,
                                   user=conf.username))
-
-    def format_answer(self, r):
-        watson_response = json.loads(r.content)
-        answers = {}
-        answers['answers'] = []
-        for x in xrange(3):
-            text = watson_response['question']['answers'][x]
-            document = watson_response['question']['evidencelist'][x]['metadataMap']['title']
-            service_name = document.split(' : ')[1]
-            services = Business.query(Business.name == service_name).fetch()
-            service = services[0].to_dict() if len(services) > 0 else []
-            answer = {'answer': text,
-                      'service': service,
-                      'id': x
-                     }
-            answers['answers'].append(answer)
-        return answers
 
 
     def log(self, question, response):
