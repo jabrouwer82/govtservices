@@ -106,17 +106,20 @@ class AskWatson(utils.Handler):
                 answer = first_answer
                 document = first['question']['evidencelist'][first_index]['metadataMap']['title']
                 first_index += 1
+                single_pass = True
             else:
                 answer = second_answer
                 document = second['question']['evidencelist'][second_index]['metadataMap']['title']
                 second_index += 1
+                single_pass = False
 
             service_name = document.split(' : ')[1]
             services = Business.query(Business.name == service_name).fetch()
             service = services[0].to_dict() if len(services) > 0 else []
             response = {'answer': answer,
                         'service': service,
-                        'id': x
+                        'id': x,
+                        'single_pass_answer': single_pass
                        }
             answers['answers'].append(response)
         return answers
