@@ -68,23 +68,25 @@ class AskWatson(utils.Handler):
         }
         logging.info('Asking Watson: "{q}"'.format(q=question))
         dp_p1_answers = self.query_watson(conf, sp_payload)
+        
         full_answer = self.request.get('d1f')
         if full_answer:
             self.render_json(json.dumps(dp_p1_answers))
             return
-        
-        dp_p2_answers = dp_p1_answers
+       
+        answers = self.format_answer(sp_answers)
         # TODO(jabrouwer82): This isn't how this should be done, fix it.
         if dp_p1_answers['question']['evidencelist'][0]['metadataMap']['originalfile'] == 'meta-question-doc.html':
             dp_p2_question = dp_p1_answers['question']['answers'][0]['text'].split(' : ')[1]
             sp_payload['question']['questionText'] = dp_p2_question
             dp_p2_answers = self.query_watson(conf, sp_payload)
+        
+            answers = self.merge_answers(sp_answers, dp_p2_answers)
+            
             full_answer = self.request.get('d2f')
             if full_answer:
                 self.render_json(json.dumps(dp_p2_answers))
                 return
-        
-        answers = self.merge_answers(sp_answers, dp_p2_answers)
         
         log = self.request.get('l')
         if log:
@@ -124,7 +126,22 @@ class AskWatson(utils.Handler):
             answers['answers'].append(response)
         return answers
 
-
+    def format_answer(self, response):
+        answers = {}
+        answers['answers'] = []
+        for x in xrange(5):
+            text = response['question']['answers'][x]
+            document = response['question']['evidencelist'][x]['metadataMap']['title']
+            service_name = document.split(' : ')[1]
+            services = Business.query(Business.name == service_name).fetch()
+            service = services[0].to_dict() if len(services) > 0 else []
+            answer = {'answer': text,
+                      'service': service,
+                      'single_pass_answer': True, 
+                      'id': x
+                     }
+            answers['answers'].append(answer)
+        return answers
 
     def query_watson(self, conf, payload):
         # Standard HTTP basic authorization, base 64 encode username:password
